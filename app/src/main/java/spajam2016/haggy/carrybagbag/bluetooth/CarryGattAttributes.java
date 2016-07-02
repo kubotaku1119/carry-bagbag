@@ -7,6 +7,8 @@ import java.util.UUID;
  */
 public class CarryGattAttributes {
 
+    public static final String CARRY_DEVICE_NAME = "carry-bagbag";
+
     public static final String MANUFACTURER_NAME = "00002a29-0000-1000-8000-00805f9b34fb";
 
     public static final String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";

@@ -33,6 +33,10 @@ public class SplashActivity extends AppCompatActivity {
                     clazz = HelloActivity.class;
                 }
 
+                // TODO:テスト
+                MyPrefs.setTargetCarry(SplashActivity.this, null);
+                clazz = SearchActivity.class;
+
                 final Intent intent = new Intent(SplashActivity.this, clazz);
                 startActivity(intent);
                 finish();
