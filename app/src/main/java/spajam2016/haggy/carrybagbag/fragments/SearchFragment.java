@@ -143,8 +143,8 @@ public class SearchFragment extends Fragment implements BleWrapper.IBleScannerLi
         }
 
         //TODO: デバイス名決まったら有効にする
-//        if (!exist && (name != null) && (CarryGattAttributes.CARRY_DEVICE_NAME.equals(name))) {
-        if (!exist && (name != null)) {
+        if (!exist && (name != null) && (CarryGattAttributes.CARRY_DEVICE_NAME.equals(name))) {
+//        if (!exist && (name != null)) {
             final CarryDevice newDevice = new CarryDevice();
             newDevice.device = device;
             newDevice.rssi = rssi;

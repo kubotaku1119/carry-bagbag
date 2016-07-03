@@ -73,7 +73,7 @@ public class TalkHandler {
             public void run() {
 
                 try {
-                    speechApi.talk("疲れたね。ちょっと休もうか",  SpeechApiWrapper.SAD);
+                    speechApi.talk("疲れたね。ちょっと休みましょう？",  SpeechApiWrapper.SAD);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -88,7 +88,7 @@ public class TalkHandler {
             public void run() {
 
                 try {
-                    speechApi.talk("さぁいこう",  SpeechApiWrapper.SAD);
+                    speechApi.talk("さぁいきましょう",  SpeechApiWrapper.SAD);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

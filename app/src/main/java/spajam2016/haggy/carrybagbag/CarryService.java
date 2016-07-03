@@ -1,6 +1,7 @@
 package spajam2016.haggy.carrybagbag;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -195,20 +196,27 @@ public class CarryService extends Service {
 
             final String address = device.getAddress();
             if (MyPrefs.getTargetCarry(CarryService.this).equals(address)) {
-                isConnected = true;
-                bleWrapper.connect(device, this);
+                if (rssi >= -65) {
+                    isConnected = true;
+                    bleWrapper.connect(device, this);
+                }
             }
         }
     }
 
     // -----------------------------
 
+    private int oldEvent;
+
     private void onGetCarryStatusChangeEvent(int event) {
         // TODO;ここできゃりーの状態に応じた処理
 
         switch (event) {
             case EVENT_OMATASE:
-                doTalkRest();
+                // お迎えの直後のお待たせは無視する
+                if (oldEvent != EVENT_OMUKAE) {
+                    doTalkRest();
+                }
                 break;
 
             case EVENT_ODEKAKE:
@@ -234,6 +242,12 @@ public class CarryService extends Service {
                 doOhanshi();
                 break;
         }
+
+        oldEvent = event;
+    }
+
+    private void startOmukaeSound() {
+
     }
 
     private void stopOmukaeSound() {
@@ -278,7 +292,11 @@ public class CarryService extends Service {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentTitle(getText(R.string.app_name));
-        builder.setContentText("テスト中...");
+        builder.setContentText("おでかけ中");
+
+        final PendingIntent stopIntent = PendingIntent.getService(this, 0, createStopIntent(this), 0);
+        builder.setContentIntent(stopIntent);
+//        builder.
         return builder.build();
     }
 
