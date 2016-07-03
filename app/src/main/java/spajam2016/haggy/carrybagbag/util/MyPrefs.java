@@ -24,6 +24,18 @@ public class MyPrefs {
         edit.commit();
     }
 
+    public static void setSongPath(Context context, String path) {
+        final SharedPreferences prefs = getPrefs(context);
+        final SharedPreferences.Editor edit = prefs.edit();
+        edit.putString("Song_Path", path);
+        edit.commit();
+    }
+
+    public static String getSongPath(Context context) {
+        final SharedPreferences prefs = getPrefs(context);
+        return prefs.getString("Song_Path", "");
+    }
+
     /**
      * 初回起動時の説明画面が表示済みか確認する.
      *
