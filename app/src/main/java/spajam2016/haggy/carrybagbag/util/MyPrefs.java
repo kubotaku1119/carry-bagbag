@@ -12,6 +12,8 @@ public class MyPrefs {
 
     private static final String KEY_TARGET_CARRY = "key_target_carry";
 
+    private static final String KEY_STATE_OWAKARE = "key_state_owakare";
+
     /**
      * 初回起動時の説明画面が終了したフラグを記録する.
      *
@@ -72,6 +74,30 @@ public class MyPrefs {
             return false;
         }
         return true;
+    }
+
+    /**
+     * お別れ状態 or お迎え状態をセットする.
+     *
+     * @param context コンテキスト
+     * @param owakare true : おわかれ, false : お迎え
+     */
+    public static void setStateOwakare(Context context, boolean owakare) {
+        final SharedPreferences prefs = getPrefs(context);
+        final SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean(KEY_STATE_OWAKARE, owakare);
+        edit.commit();
+    }
+
+    /**
+     * 現在の状態がおわかれかどうかを取得する。
+     *
+     * @param context コンテキスト.
+     * @return true : おわかれ, false : おむかえ
+     */
+    public static boolean isOwakareState(Context context) {
+        final SharedPreferences prefs = getPrefs(context);
+        return prefs.getBoolean(KEY_STATE_OWAKARE, false);
     }
 
     /**
