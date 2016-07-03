@@ -27,7 +27,8 @@ import spajam2016.haggy.carrybagbag.fragments.SearchFragment;
 
 import spajam2016.haggy.carrybagbag.music.ChakuMelo;
 
-public class CarryActivity extends AppCompatActivity implements ServiceConnection, OwakareFragment.OnTargetOwakareSelectedListener{
+public class CarryActivity extends AppCompatActivity
+        implements ServiceConnection, OwakareFragment.OnTargetOwakareSelectedListener, TsuitayoFragment.OnTsuitayoListener {
 
     private boolean owakareState;
 
@@ -121,10 +122,20 @@ public class CarryActivity extends AppCompatActivity implements ServiceConnectio
                 .setPositiveButton("またね♡", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
+
+                        MyPrefs.setStateOwakare(CarryActivity.this, true);
+
+                        final Intent stopIntent = CarryService.createStopIntent(CarryActivity.this);
+                        startService(stopIntent);
                     }
                 }).show();
 
 
 
+    }
+
+    @Override
+    public void onTsuitayo() {
+        finish();
     }
 }

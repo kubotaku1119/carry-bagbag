@@ -20,8 +20,8 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
 
                 // TODO:テスト
-                MyPrefs.setTargetCarry(SplashActivity.this, null);
-                MyPrefs.setStateOwakare(SplashActivity.this, true);
+                //MyPrefs.setTargetCarry(SplashActivity.this, null);
+                //MyPrefs.setStateOwakare(SplashActivity.this, true);
 
                 Class clazz;
                 if (MyPrefs.isFnishedHelloActivity(SplashActivity.this)) {
@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
                 // TODO:テスト
-//                clazz = SearchActivity.class;
+                //clazz = CarryActivity.class;
 
                 final Intent intent = new Intent(SplashActivity.this, clazz);
                 startActivity(intent);

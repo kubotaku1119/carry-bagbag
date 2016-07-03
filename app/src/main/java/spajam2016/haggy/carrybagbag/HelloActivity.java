@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import spajam2016.haggy.carrybagbag.fragments.HelloCarryFragment;
+import spajam2016.haggy.carrybagbag.util.MyPrefs;
 
 public class HelloActivity extends AppCompatActivity
         implements ViewPager.OnPageChangeListener, HelloCarryFragment.OnStartButtonClickedListener {
@@ -90,6 +91,9 @@ public class HelloActivity extends AppCompatActivity
     public void OnClicked() {
         final Intent intent = new Intent(HelloActivity.this, SearchActivity.class);
         startActivity(intent);
+
+        MyPrefs.setFinishHelloActivity(this);
+
         finish();
     }
 
