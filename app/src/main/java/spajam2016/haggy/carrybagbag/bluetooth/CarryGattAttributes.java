@@ -21,6 +21,12 @@ public class CarryGattAttributes {
 
     public static final UUID UUID_KASA_CHARA = UUID.fromString(CARRY_CHARA);
 
+    public static final String HEART_RATE_SERVICE = "0000180d-0000-1000-8000-00805f9b34fb";
 
+    public static final String HEART_RATE_MEASUREMENT = "00002a37-0000-1000-8000-00805f9b34fb";
+
+    public static final UUID UUID_HEART_RATE_SERVICE = UUID.fromString(HEART_RATE_SERVICE);
+
+    public static final UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString(HEART_RATE_MEASUREMENT);
 
 }

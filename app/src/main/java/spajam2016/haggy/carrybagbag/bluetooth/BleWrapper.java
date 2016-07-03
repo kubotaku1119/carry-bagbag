@@ -21,8 +21,6 @@ import android.util.Log;
 import java.util.List;
 import java.util.UUID;
 
-import spajam2016.haggy.carrybagbag.CarryActivity;
-
 /**
  * BLE Wrapper class.
  */
@@ -514,6 +512,17 @@ public class BleWrapper {
         }
     };
 
+    public static int getCarryStatusChangedEvent(BluetoothGattCharacteristic characteristic) {
+        int flag = characteristic.getProperties();
+        int format = -1;
+        if ((flag & 0x01) != 0) {
+            format = BluetoothGattCharacteristic.FORMAT_UINT16;
+        } else {
+            format = BluetoothGattCharacteristic.FORMAT_UINT8;
+        }
+        int event = characteristic.getIntValue(format, 1);
+        return event;
+    }
     /**
      * Bluetoothが有効になっているか.
      *
