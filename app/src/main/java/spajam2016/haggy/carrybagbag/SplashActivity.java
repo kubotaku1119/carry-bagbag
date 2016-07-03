@@ -19,6 +19,9 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
 
+                // TODO:テスト
+                MyPrefs.setTargetCarry(SplashActivity.this, null);
+
                 Class clazz;
                 if (MyPrefs.isFnishedHelloActivity(SplashActivity.this)) {
                     if (MyPrefs.existTargetCarry(SplashActivity.this)) {
@@ -34,8 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
                 // TODO:テスト
-                MyPrefs.setTargetCarry(SplashActivity.this, null);
-                clazz = SearchActivity.class;
+//                clazz = SearchActivity.class;
 
                 final Intent intent = new Intent(SplashActivity.this, clazz);
                 startActivity(intent);

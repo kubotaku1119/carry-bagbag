@@ -30,6 +30,7 @@ public class HelloCarryFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
 
     private int position;
+
     private int helloIndex;
 
     public HelloCarryFragment() {
@@ -62,7 +63,7 @@ public class HelloCarryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            position = getArguments().getInt(ARG_PARAM1);
+            helloIndex = getArguments().getInt(ARG_PARAM1);
         }
     }
 
