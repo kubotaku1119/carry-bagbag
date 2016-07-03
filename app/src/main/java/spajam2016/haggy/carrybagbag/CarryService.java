@@ -15,9 +15,27 @@ import java.util.List;
 
 import spajam2016.haggy.carrybagbag.bluetooth.BleWrapper;
 import spajam2016.haggy.carrybagbag.bluetooth.CarryGattAttributes;
+import spajam2016.haggy.carrybagbag.talk.TalkHandler;
 import spajam2016.haggy.carrybagbag.util.MyPrefs;
 
 public class CarryService extends Service {
+
+    // 歩き終わり
+    private static final int EVENT_OMATASE = 1;
+
+    // 歩き始めの手を伸ばすところ
+    private static final int EVENT_ODEKAKE = 2;
+
+    private static final int EVENT_OWAKARE = 3;
+
+    // 音を消すイベント
+    private static final int EVENT_OMUKAE = 4;
+
+    private static final int EVENT_PAIN = 5;
+
+    private static final int EVENT_PLEASE_WAIT = 6;
+
+    private static final int EVENT_OHANASHI = 7;
 
     private static final String TAG = CarryService.class.getSimpleName();
 
@@ -185,8 +203,66 @@ public class CarryService extends Service {
 
     // -----------------------------
 
-    private void onGetCarryStatusChangeEvent(int acceleration) {
+    private void onGetCarryStatusChangeEvent(int event) {
         // TODO;ここできゃりーの状態に応じた処理
+
+        switch (event) {
+            case EVENT_OMATASE:
+                doTalkRest();
+                break;
+
+            case EVENT_ODEKAKE:
+                doTalkStartWalk();
+                break;
+
+            case EVENT_OWAKARE:
+                break;
+
+            case EVENT_OMUKAE:
+                stopOmukaeSound();
+                break;
+
+            case EVENT_PAIN:
+                doTalkPain();
+                break;
+
+            case EVENT_PLEASE_WAIT:
+                doTalkPleaseWait();
+                break;
+
+            case EVENT_OHANASHI:
+                doOhanshi();
+                break;
+        }
+    }
+
+    private void stopOmukaeSound() {
+
+    }
+
+    private void doTalkRest() {
+        final TalkHandler talkHandler = new TalkHandler(this);
+        talkHandler.talkDoRest();
+    }
+
+    private void doTalkStartWalk() {
+        final TalkHandler talkHandler = new TalkHandler(this);
+        talkHandler.talkStartWalk();
+    }
+
+    private void doTalkPleaseWait() {
+        final TalkHandler talkHandler = new TalkHandler(this);
+        talkHandler.talkPleaseWait();
+    }
+
+    private void doTalkPain() {
+        final TalkHandler talkHandler = new TalkHandler(this);
+        talkHandler.talkPain();
+    }
+
+    private void doOhanshi() {
+        final TalkHandler talkHandler = new TalkHandler(this);
+        talkHandler.talkRandom(this);
     }
 
 

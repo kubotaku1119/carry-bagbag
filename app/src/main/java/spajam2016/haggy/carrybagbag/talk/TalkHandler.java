@@ -67,6 +67,36 @@ public class TalkHandler {
         })).start();
     }
 
+    public void talkDoRest() {
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    speechApi.talk("疲れたね。ちょっと休もうか",  SpeechApiWrapper.SAD);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        })).start();
+    }
+
+    public void talkStartWalk() {
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    speechApi.talk("さぁいこう",  SpeechApiWrapper.SAD);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        })).start();
+    }
+
     private static final String[] TALK_LIST = {
             "こんにちは",
             "おはよう",
