@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">きゃりーばぐばぐ</string>
+    //Helloに表示されるテキスト
+    <string name="hello_text_0">
+        はじめまして、\n
+        わたしはきゃりーばぐばぐ！\n
+        \n
+        インストールしてくれてありがとう。
+    </string>
+    <string name="hello_text_1">
+        旅行に行くときは\n
+        私を連れて行ってね！\n
+        たくさん話しかけちゃう！\n
+    </string>
+    <string name="hello_text_2">
+        空港で待ち合わせするときは\n
+        どこにいるか教えてあげるね\n
+        私の歌で！
+    </string>
+    <string name="hello_text_3">
+        セカイノオワリが来ても\n
+        私のことを離さないでね\n
+        約束だよ
+    </string>
+
+
 </resources>
