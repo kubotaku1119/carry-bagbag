@@ -24,4 +24,7 @@
     </string>
 
 
+    <!-- please change your api key. -->
+    <string name="text_api_key">API_KEY</string>
+    <string name="ai_bot_api_key">API_KEY</string>
 </resources>
