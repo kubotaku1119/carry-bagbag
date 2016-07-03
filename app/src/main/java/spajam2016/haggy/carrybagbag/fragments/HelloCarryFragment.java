@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -129,6 +130,19 @@ public class HelloCarryFragment extends Fragment {
                 return R.mipmap.hello_image3;
         }
         return 0;
+    }
+
+    //STARTボタンの表示
+    private void showLoginButtonIfNeeded() {
+        if (helloIndex == 3) {
+            final View view = getView();
+
+            final Button btn1 = (Button) view.findViewById(R.id.hello_btn1);
+            btn1.setVisibility(View.VISIBLE);
+            btn1.setOnClickListener(onClickStartBtnListener);
+
+
+        }
     }
 
 }
