@@ -7,7 +7,10 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -15,6 +18,7 @@ import java.util.List;
 
 import spajam2016.haggy.carrybagbag.bluetooth.BleWrapper;
 import spajam2016.haggy.carrybagbag.bluetooth.CarryGattAttributes;
+import spajam2016.haggy.carrybagbag.music.ChakuMelo;
 import spajam2016.haggy.carrybagbag.util.MyPrefs;
 
 public class CarryService extends Service {
@@ -25,14 +29,33 @@ public class CarryService extends Service {
 
     private Thread carryWatchThread;
 
+    private Context context;
+
+    private ChakuMelo chakuMelo;
+
+    private Messenger messenger;
 
     public CarryService() {
+        context = this;
+    }
+
+
+    private class IncommingHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg){
+            if(msg.what == 1){
+                stopChakuMelo();
+            }
+        }
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+        messenger = new Messenger(new IncommingHandler());
+        return messenger.getBinder();
         // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+//        throw new UnsupportedOperationException("Not yet implemented");
+
     }
 
     @Override
@@ -85,6 +108,7 @@ public class CarryService extends Service {
             isRunning = true;
             carryWatchThread = new Thread(new CarryTask());
             carryWatchThread.start();
+
         } else {
             this.stopSelf();
         }
@@ -172,6 +196,14 @@ public class CarryService extends Service {
             Log.d(TAG, "---- Scan BLE device : " + device.getName() + ", (" + rssi + ") ----");
 
             if (isConnected) {
+
+                //HACK:到着メロディを鳴らす
+                if(chakuMelo == null) {
+                    chakuMelo = new ChakuMelo(context);
+                    chakuMelo.select();
+                    chakuMelo.play();
+                }
+
                 return;
             }
 
@@ -179,6 +211,7 @@ public class CarryService extends Service {
             if (MyPrefs.getTargetCarry(CarryService.this).equals(address)) {
                 isConnected = true;
                 bleWrapper.connect(device, this);
+
             }
         }
     }
@@ -187,9 +220,19 @@ public class CarryService extends Service {
 
     private void onGetCarryStatusChangeEvent(int acceleration) {
         // TODO;ここできゃりーの状態に応じた処理
+
+        stopChakuMelo();
     }
 
 
+    private void stopChakuMelo(){
+        if(chakuMelo != null){
+            if(chakuMelo.isPlaying()){
+                chakuMelo.stop();
+                chakuMelo = null;
+            }
+        }
+    }
     // -----------------------------
 
     private static final int NOTIFY_FOREGROUND_ID = 201607;
