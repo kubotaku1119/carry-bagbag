@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">きゃりーばぐばぐ</string>
+
+
+    <!-- please change your api key. -->
+    <string name="text_api_key">API_KEY</string>
 </resources>
