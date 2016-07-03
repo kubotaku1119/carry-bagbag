@@ -2,9 +2,13 @@ package spajam2016.haggy.carrybagbag.talk;
 
 import android.content.Context;
 
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.util.Random;
 
 import spajam2016.haggy.carrybagbag.R;
+import spajam2016.haggy.carrybagbag.api.AITalkApiWrapper;
 import spajam2016.haggy.carrybagbag.api.SpeechApiWrapper;
 
 /**
@@ -33,7 +37,68 @@ public class TalkHandler {
         })).start();
     }
 
-    public void talkRandom() {
+    public void talkPain() {
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    speechApi.talk("いったぁー",  SpeechApiWrapper.SAD);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        })).start();
+    }
+
+    public void talkPleaseWait() {
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    speechApi.talk("まってよー",  SpeechApiWrapper.SAD);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        })).start();
+    }
+
+    private static final String[] TALK_LIST = {
+            "こんにちは",
+            "おはよう",
+            "いい天気だね",
+            "お腹すいたね",
+            "おでかけ楽しいね",
+            "好きだよ"
+    };
+
+    public void talkRandom(final Context context) {
+
+        final Random random = new Random();
+        int talkIndex = random.nextInt(TALK_LIST.length);
+        final String text = TALK_LIST[talkIndex];
+
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                final AITalkApiWrapper aiTalkApiWrapper = new AITalkApiWrapper(context.getString(R.string.ai_bot_api_key));
+                try {
+                    final String responseFromAI = aiTalkApiWrapper.getResponseFromAI(text);
+                    if (!responseFromAI.isEmpty()) {
+                        speechApi.talk(responseFromAI, SpeechApiWrapper.HAPPINESS);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        })).start();
 
     }
 
