@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import spajam2016.haggy.carrybagbag.R;
 
@@ -60,6 +62,25 @@ public class HelloCarryFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        setupViews();
+    }
+
+
+    private void setupViews() {
+        final View view = getView();
+
+        final TextView textView = (TextView) view.findViewById(R.id.hello_fragment_text);
+        textView.setText(getHelloTextResource());
+
+        final ImageView imageView = (ImageView) view.findViewById(R.id.hello_fragment_image);
+        imageView.setImageResource(getHelloImageResource());
+
+        showLoginButtonIfNeeded();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -74,5 +95,7 @@ public class HelloCarryFragment extends Fragment {
             }
         }
     };
+
+
 
 }
