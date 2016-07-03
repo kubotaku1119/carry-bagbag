@@ -104,7 +104,7 @@ public class HelloActivity extends AppCompatActivity
         //Helloのスライドの数
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
     }
 
