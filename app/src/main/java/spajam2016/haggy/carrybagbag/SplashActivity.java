@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 // TODO:テスト
                 MyPrefs.setTargetCarry(SplashActivity.this, null);
-                MyPrefs.setStateOwakare(SplashActivity.this, true);
+                MyPrefs.setStateOwakare(SplashActivity.this, false);
 
                 Class clazz;
                 if (MyPrefs.isFnishedHelloActivity(SplashActivity.this)) {

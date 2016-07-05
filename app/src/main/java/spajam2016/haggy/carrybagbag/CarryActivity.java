@@ -114,8 +114,10 @@ public class CarryActivity extends AppCompatActivity implements ServiceConnectio
     }
 
     @Override
-    public void Selected(AssetFileDescriptor afd) {
+    public void Selected(String path) {
 //        this.afd = afd;
+        MyPrefs.setSongPath(this, path);
+
         new AlertDialog.Builder(this)
                 .setMessage("それじゃあ、またね♡")
                 .setPositiveButton("またね♡", new DialogInterface.OnClickListener() {

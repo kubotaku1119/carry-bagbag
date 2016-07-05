@@ -14,6 +14,7 @@ public class MyPrefs {
 
     private static final String KEY_STATE_OWAKARE = "key_state_owakare";
 
+    private static final String KEY_SONG_PATH = "key_song_path";
     /**
      * 初回起動時の説明画面が終了したフラグを記録する.
      *
@@ -29,13 +30,13 @@ public class MyPrefs {
     public static void setSongPath(Context context, String path) {
         final SharedPreferences prefs = getPrefs(context);
         final SharedPreferences.Editor edit = prefs.edit();
-        edit.putString("Song_Path", path);
+        edit.putString(KEY_SONG_PATH, path);
         edit.commit();
     }
 
     public static String getSongPath(Context context) {
         final SharedPreferences prefs = getPrefs(context);
-        return prefs.getString("Song_Path", "");
+        return prefs.getString(KEY_SONG_PATH, "");
     }
 
     /**

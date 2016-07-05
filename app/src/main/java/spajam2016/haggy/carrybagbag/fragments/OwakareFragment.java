@@ -28,6 +28,7 @@ import java.util.List;
 
 import spajam2016.haggy.carrybagbag.R;
 import spajam2016.haggy.carrybagbag.bluetooth.CarryDevice;
+import spajam2016.haggy.carrybagbag.util.MyPrefs;
 import spajam2016.haggy.carrybagbag.util.MyUtils;
 
 public class OwakareFragment extends Fragment {
@@ -35,6 +36,8 @@ public class OwakareFragment extends Fragment {
     private SongAdapter songAdapter;
     public static final String TAG = OwakareFragment.class.getSimpleName();
     private ArrayList<AssetFileDescriptor> afdList;
+    private ArrayList<String> pathList;
+
     private OnTargetOwakareSelectedListener onTargetOwakareSelectedListener;
 
     public OwakareFragment() {
@@ -70,25 +73,20 @@ public class OwakareFragment extends Fragment {
 
 
     private void initViews() {
+        pathList = new ArrayList<String>();
 
-        afdList = new ArrayList<AssetFileDescriptor>();
-
-        String[] pathList = null;
+        String[] nameList = null;
 
 
         try {
-            pathList = getResources().getAssets().list("music");
+            nameList = getResources().getAssets().list("music");
         }catch (IOException e){
         }
 
 
 
-        for(String path : pathList){
-            try {
-                afdList.add(getResources().getAssets().openFd("music/"+path));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        for(String name : nameList){
+            pathList.add("music/"+name);
         }
 
         final View view = getView();
@@ -109,13 +107,13 @@ public class OwakareFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return afdList.size();
+            return pathList.size();
         }
 
         @Override
-        public AssetFileDescriptor getItem(int position) {
+        public String getItem(int position) {
             if (position < getCount()) {
-                return afdList.get(position);
+                return pathList.get(position);
             }
             return null;
         }
@@ -144,15 +142,20 @@ public class OwakareFragment extends Fragment {
                 } else {
                     holder = (ViewHolder) convertView.getTag();
                 }
-            AssetFileDescriptor afd = getItem(position);
+            String path = getItem(position);
 
+            try {
+                AssetFileDescriptor afd = getResources().getAssets().openFd(path);
 
-            if (afd != null) {
-                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-                mmr.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                if (afd != null) {
+                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                    mmr.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 
-                holder.title.setText(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
-                holder.artist.setText(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+                    holder.title.setText(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
+                    holder.artist.setText(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+                }
+            }catch (IOException e){
+                e.getStackTrace();
             }
 
             return convertView;
@@ -179,15 +182,15 @@ public class OwakareFragment extends Fragment {
     }
 
     public interface OnTargetOwakareSelectedListener {
-        void Selected(AssetFileDescriptor afd);
+        void Selected(String path);
     }
 
     private AdapterView.OnItemClickListener onOwakareClickedListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            AssetFileDescriptor afd = (AssetFileDescriptor) parent.getAdapter().getItem(position);
+            String path = (String) parent.getAdapter().getItem(position);
             if (onTargetOwakareSelectedListener != null) {
-                onTargetOwakareSelectedListener.Selected(afd);
+                onTargetOwakareSelectedListener.Selected(path);
 
             }
         }
