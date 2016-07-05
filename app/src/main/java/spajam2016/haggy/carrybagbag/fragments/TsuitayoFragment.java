@@ -1,6 +1,7 @@
 package spajam2016.haggy.carrybagbag.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,12 @@ import spajam2016.haggy.carrybagbag.util.MyPrefs;
  * ついたよFragment
  */
 public class TsuitayoFragment extends Fragment {
+
+    public interface OnTsuitayoListener {
+        void onTsuitayo();
+    }
+
+    private OnTsuitayoListener tsuitayoListener;
 
     public static final String TAG = TsuitayoFragment.class.getSimpleName();
 
@@ -46,6 +53,24 @@ public class TsuitayoFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnTsuitayoListener) {
+            tsuitayoListener = (OnTsuitayoListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        tsuitayoListener = null;
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -68,8 +93,11 @@ public class TsuitayoFragment extends Fragment {
         final Intent startIntent = CarryService.createStartIntent(getContext());
         getActivity().startService(startIntent);
 
-        // TODO:確認
         MyPrefs.setStateOwakare(getContext(), false);
+
+        if (tsuitayoListener != null) {
+            tsuitayoListener.onTsuitayo();
+        }
     }
 
 }

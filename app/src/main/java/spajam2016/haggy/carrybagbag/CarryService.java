@@ -220,7 +220,7 @@ public class CarryService extends Service {
 
             final String address = device.getAddress();
             if (MyPrefs.getTargetCarry(CarryService.this).equals(address)) {
-                if (rssi >= -65) {
+                if (rssi >= -55) {
                     isConnected = true;
 
                     // 着メロ開始
